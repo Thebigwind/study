@@ -10,6 +10,8 @@ require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/gin-gonic/gin v1.7.4 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
+	github.com/gohouse/converter v0.0.3 // indirect
 	github.com/guanguans/id-validator v1.1.1
 	github.com/hashicorp/memberlist v0.2.4
 	github.com/json-iterator/go v1.1.11
