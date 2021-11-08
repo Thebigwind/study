@@ -4,13 +4,30 @@ import (
 	"errors"
 	"fmt"
 	valid "github.com/guanguans/id-validator"
+	"os"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
 )
 
+var BizType interface{}
+
 func main() {
+
+	if time.Now().Format("20060102")[4:] > "0930" {
+		fmt.Println("xxxx")
+	}
+	fmt.Println(time.Now().Format("20060102")[4:])
+	fmt.Println(time.Now().AddDate(1, 0, 0))
+
+	//BizType = "1"
+	if BizType != nil && BizType.(string) != "2" {
+		fmt.Printf("哈哈哈哈\n")
+		fmt.Printf("xx:%v", BizType)
+		os.Exit(0)
+	}
+
 	fmt.Println(time.Now().Format("20060102"))
 	fmt.Println(VerifyMobileFormat("17910715315"))
 	isMobile2("27710715315")
