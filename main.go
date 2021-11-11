@@ -48,6 +48,8 @@ func main() {
 	fmt.Printf("idinfo:%+v", idinfo)
 	fmt.Println()
 	fmt.Printf("idinfo sex:%+v", idinfo.Sex)
+
+	Test2()
 }
 func isMobile(mobile string) {
 	result, _ := regexp.MatchString(`^(1[3|4|5|7|8][0-9]\d{4,8})$`, mobile)
@@ -96,4 +98,24 @@ func VerifyMobileFormat(mobileNum string) bool {
 
 	reg := regexp.MustCompile(regular)
 	return reg.MatchString(mobileNum)
+}
+
+func Test2() {
+	birthday := []string{"1990", "12", "12"}
+	birYear, _ := strconv.Atoi(birthday[0])
+	birMonth, _ := strconv.Atoi(birthday[1])
+	day, _ := strconv.Atoi(birthday[2])
+
+	age := time.Now().Year() - birYear
+	fmt.Printf("age0:%d\n", age)
+	if int(time.Now().Month()) < birMonth {
+		age--
+	}
+	fmt.Printf("age1:%d\n", age)
+	//fmt.Printf("age1:%d\n",age)
+	if int(time.Now().Month()) == birMonth && time.Now().Day() < day {
+		age--
+	}
+	fmt.Println("----------")
+	fmt.Printf("age:%d", age)
 }
