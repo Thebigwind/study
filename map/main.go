@@ -10,6 +10,8 @@ Go 语言中读取 map 有两种语法：带 comma 和 不带 comma。当要查�
 而不带 comma 的语句则会返回一个 key 类型的零值。如果 key 是 int 型就会返回 0，如果 key 是 string 类型，就会返回空字符串。
 */
 func main() {
+	Data := make(map[string]struct{}, 0)
+	fmt.Printf("Data:%+v\n", Data)
 	//ageMap := make(map[string]int)
 	//ageMap["qcrao"] = 18
 	//
