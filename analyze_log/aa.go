@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	test()
+	test3()
 }
 
 func test() {
@@ -32,4 +32,16 @@ func test2() {
 	for i := range fileInfoList {
 		fmt.Println(fileInfoList[i].Name()) //打印当前文件或目录下的文件或目录名
 	}
+}
+
+func test3() {
+	a := "aaa"
+	domainList := strings.Split(a, ",")
+	domainKey := ""
+	if len(domainList) == 1 {
+		domainKey = a
+	} else {
+		domainKey = strings.Join(domainList, "\\|")
+	}
+	fmt.Printf("domainKey:%s\n", domainKey)
 }

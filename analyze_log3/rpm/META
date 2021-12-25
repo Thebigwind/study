@@ -1,0 +1,8 @@
+Meta:         1
+Name:         metaview
+Branch:       1.0
+Version:      XTAO_GIT_METAVIEW_VERSION
+Release:      1
+Release-Tags: relext
+License:      GPL
+Author:       William Yao 
