@@ -1,0 +1,14 @@
+aclocal.m4
+logctl/Makefile
+logctl/Makefile.in
+metaview/Makefile
+metaview/Makefile.in
+install-sh
+missing
+rpmbuild/*
+config.*
+configure
+Makefile
+Makefile.in
+logctl/metacli
+*.tar.gz

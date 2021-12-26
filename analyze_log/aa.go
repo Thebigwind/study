@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	test3()
+	test5()
 }
 
 func test() {
@@ -44,4 +44,18 @@ func test3() {
 		domainKey = strings.Join(domainList, "\\|")
 	}
 	fmt.Printf("domainKey:%s\n", domainKey)
+}
+
+func test4() {
+	err := os.MkdirAll("dir1/dir2/dir3", os.ModePerm)
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Printf("success:%s", "a")
+	}
+}
+
+func test5() {
+	aa := fmt.Sprintf("%.2d", 0)
+	fmt.Println(aa)
 }
