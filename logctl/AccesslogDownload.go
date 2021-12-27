@@ -177,4 +177,5 @@ func ParamFilter(params AccessLogDownloadParams) error {
 	if dateInt < startInt || dateInt > endInt {
 		return errors.New("date范围只能是最近30天")
 	}
+	return nil
 }

@@ -43,7 +43,9 @@ func DoAnalyzePVCommand(params AccessLogPvParams) error {
 
 	exc := ""
 	if params.IsGzip {
-		exc = "zcat" + " " + params.LogDirPath + " |grep " + domainKey + " |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
+		exc = "zcat" + " " + params.LogDirPath + "/* |grep " + domainKey + " |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
+	}else{
+		exc = "grep" +  domainKey + " " + params.LogDirPath + "/* |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
 	}
 
 	if err, _ := ExecShell(exc); err != nil {
