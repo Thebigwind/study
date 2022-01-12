@@ -1,8 +1,10 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"strings"
@@ -44,13 +46,19 @@ func DoAnalyzePVCommand(params AccessLogPvParams) error {
 	exc := ""
 	if params.IsGzip {
 		exc = "zcat" + " " + params.LogDirPath + "/* |grep " + domainKey + " |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
-	}else{
-		exc = "grep" +  domainKey + " " + params.LogDirPath + "/* |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
+	} else {
+		exc = "grep" + domainKey + " " + params.LogDirPath + "/* |awk '{print $6}' | sort | uniq -c | sort -n -k 1 -r  -> " + csvPath + " &"
 	}
 
 	if err, _ := ExecShell(exc); err != nil {
 		return err
 	}
+	/*
+	   2144504 "/user/checkUserSession"
+	    119470 "/user/getTag"
+	    119230 "/user/getKaTag"
+	*/
+	//结果文件需要二次处理，返回指定格式
 
 	return nil
 }
@@ -117,7 +125,7 @@ func StatFilePV(domainList []string, filePath string, isGzip bool) error {
 				//截取接口名称
 				uri := GetUri(lineCul[1])
 				//加入pvmap
-				CaculatePv(uri)
+				CaculatePv(uri, 1)
 				//一旦匹配上，不需要继续遍历，跳过
 				break
 			}
@@ -149,13 +157,13 @@ func GetUri(target string) string {
 	return uri
 }
 
-func CaculatePv(uri string) {
+func CaculatePv(uri string, num int64) {
 	GlobalStatPvData.lc.Lock()
 	v, exist := GlobalStatPvData.PvData[uri]
 	if exist {
-		GlobalStatPvData.PvData[uri] = v + 1
+		GlobalStatPvData.PvData[uri] = v + num
 	} else {
-		GlobalStatPvData.PvData[uri] = 1
+		GlobalStatPvData.PvData[uri] = num
 	}
 	GlobalStatPvData.lc.Unlock()
 }
@@ -207,3 +215,69 @@ func Consumer(wg *sync.WaitGroup, fileChan chan string, domainList []string, isG
 		}
 	}
 }
+
+func GetCsvData(filepath string) error {
+	//read file
+	file, err := os.Open(filepath)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	rd := bufio.NewReaderSize(file, 2097152) //2097152
+	for {
+
+		lineText, err := rd.ReadString('\n')
+		if err != nil || io.EOF == err {
+			break
+		}
+
+		if lineText == "" {
+			continue
+		}
+
+		lineText = strings.Trim(lineText, "\n")
+		mList := strings.Split(lineText, "\"")
+		//fmt.Printf("mList:%+v",mList)
+		//for k,v := range mList{
+		//	fmt.Printf("key:%d,value:%s\n",k,v)
+		//}
+		//os.Exit(0)
+		if len(mList) < 2 {
+			fmt.Printf("err:")
+			continue
+		}
+		uri := strings.Trim(mList[1], "\" ")
+		if strings.HasPrefix(uri, "/app") {
+			aList := strings.Split(uri, "/")
+			a := "/"
+			for _, v := range aList[5:] {
+				a = a + v + "/"
+			}
+
+			uri = strings.TrimSuffix(a, "/")
+		} else if strings.HasPrefix(uri, "/user/get/") {
+			uri = "/user/get"
+		}
+		pv := strings.Trim(mList[0], " ")
+		//fmt.Printf("pv:%v\n",pv)
+		num, err := strconv.ParseInt(pv, 10, 64)
+		if err != nil {
+			fmt.Printf("err:", err.Error())
+			continue
+		}
+		CaculatePv(uri, num)
+	}
+	return nil
+}
+
+//
+//func CaculatePv2(uri string, num int64) {
+//	GlobalStatPvData.lc.Lock()
+//	v, exist := GlobalStatPvData.PvData[uri]
+//	if exist {
+//		GlobalStatPvData.PvData[uri] = v + num
+//	} else {
+//		GlobalStatPvData.PvData[uri] = num
+//	}
+//	GlobalStatPvData.lc.Unlock()
+//}
