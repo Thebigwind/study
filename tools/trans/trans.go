@@ -163,3 +163,18 @@ func DiffSlice(sliA []string, sliB []string) []string {
 	}
 	return result
 }
+
+func JsonStructToMap(data interface{}) (map[string]interface{}, error) {
+	// 结构体转json
+	strRet, err := json.Marshal(data)
+	if err != nil {
+		return nil, err
+	}
+	// json转map
+	var mRet map[string]interface{}
+	err1 := json.Unmarshal(strRet, &mRet)
+	if err1 != nil {
+		return nil, err1
+	}
+	return mRet, nil
+}
