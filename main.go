@@ -119,3 +119,10 @@ func Test2() {
 	fmt.Println("----------")
 	fmt.Printf("age:%d", age)
 }
+
+func test() {
+	var a string
+	a = "abcd"
+	fmt.Printf("aa:%+v", time.Now().Year())
+	fmt.Println(a)
+}
