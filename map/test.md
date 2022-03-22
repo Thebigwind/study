@@ -32,11 +32,11 @@ type bmap struct {
 
 但这只是表面(src/runtime/hashmap.go)的结构，编译期间会给它加料，动态地创建一个新的结构：
 type bmap struct {
-topbits  [8]uint8
-keys     [8]keytype
-values   [8]valuetype
-pad      uintptr
-overflow uintptr
+	topbits  [8]uint8
+	keys     [8]keytype
+	values   [8]valuetype
+	pad      uintptr
+	overflow uintptr
 }
 bmap 就是我们常说的“桶”，桶里面会最多装 8 个 key，这些 key 之所以会落入同一个桶，是因为它们经过哈希计算后，哈希结果是“一类”的。在桶内，又会根据 key 计算出来的 hash 值的高 8 位来决定 key 到底落入桶内的哪个位置（一个桶内最多有8个位置）。
 
@@ -74,6 +74,8 @@ map 在扩容后，会发生 key 的搬迁，原来落在同一个 bucket 中的
 Go 做得更绝，当我们在遍历 map 时，并不是固定地从 0 号 bucket 开始遍历，每次都是从一个随机值序号的 bucket 开始遍历，
 并且是从这个 bucket 的一个随机序号的 cell 开始遍历。这样，即使你是一个写死的 map，仅仅只是遍历它，
 也不太可能会返回一个固定序列的 key/value 对了。
+
+根据随机数，选择一个桶位置作为起始点进行遍历迭代 ,因此每次重新 for range map，你见到的结果都是不一样的。那是因为它的起始位置根本就不固定！
 
 
 
