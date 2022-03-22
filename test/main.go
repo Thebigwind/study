@@ -29,5 +29,8 @@ func GetSessId4Html5(uid string, business string) string {
 }
 
 func main() {
-	fmt.Printf("result:%s", GetSessId4Html5("2070657982", "api"))
+	fmt.Printf("result:%s\n", GetSessId4Html5("2070657982", "api"))
+
+	fmt.Printf("xxx:%d\n", 15552000/3600/24)
+	fmt.Printf("oooo:%d\n", 2592000/3600/24)
 }

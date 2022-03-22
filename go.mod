@@ -18,8 +18,10 @@ require (
 	github.com/klauspost/reedsolomon v1.9.13
 	github.com/onsi/gomega v1.15.0 // indirect
 	github.com/pkg/errors v0.9.1
+	github.com/smallnest/gosercomp v0.0.0-20220113063424-e2d5da734209 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/stuarthu/securehttp v0.0.0-20181012073024-c5fb2041ec02
+	github.com/techoner/gophp v0.2.0 // indirect
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	stathat.com/c/consistent v1.0.0
