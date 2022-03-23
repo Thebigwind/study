@@ -5,6 +5,10 @@ go 1.15
 require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751 // indirect
 	github.com/alecthomas/units v0.0.0-20210927113745-59d0afb8317a // indirect
+	github.com/alibabacloud-go/darabonba-openapi v0.1.14 // indirect
+	github.com/alibabacloud-go/dingtalk v1.3.13 // indirect
+	github.com/alibabacloud-go/tea v1.1.17 // indirect
+	github.com/alibabacloud-go/tea-utils v1.4.3 // indirect
 	github.com/andreburgaud/crypt2go v0.13.0
 	github.com/forgoer/openssl v0.0.0-20210828150411-6c5378b5b719
 	github.com/gin-contrib/sse v0.1.0 // indirect

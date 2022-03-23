@@ -33,4 +33,14 @@ func main() {
 
 	fmt.Printf("xxx:%d\n", 15552000/3600/24)
 	fmt.Printf("oooo:%d\n", 2592000/3600/24)
+
+}
+
+type XzVipInfo struct {
+	IsVipNow   string `json:"isVipNow"` //
+	IsVip      string `json:"isVip"`    //
+	VipShipFee struct {
+		Vip365     string `json:"vip365"`     //
+		Experience string `json:"vipShipFee"` //
+	}
 }

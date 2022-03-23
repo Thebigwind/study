@@ -21,8 +21,10 @@ func main() {
 	// userId:123942367395843,session的ssId:151379551715332,expirTime:1661589916
 	key2 := "WyIxNjA0MDI0NTI4b1JVZiIseyJzc0lkIjoxNTEzNzk1NTE3MTUzMjksInNzVHlwZSI6Im1vYmlsZV9jb2RlIiwiZGF0YSI6IjQxMjUyZTBiZTMwNjAxNWFjNDBlYzUzODZiNmJkM2VhIiwiZXhwaXJlIjoxNjYxNTg5OTE2fSwiNTNiZWI2NTZlYmJhMGFiYmIwOTViNmVjNWMxMTU5MmQiXQ=="
 	//userId:123942367395843,session的ssId:151379551715329,expirTime:1661589916
+	key3 := "WyI0NjAzMDExMzI3TWZtWiIseyJzc0lkIjoxNDQxMTc0MDQyNzA1OTUsInNzVHlwZSI6Im1vYmlsZV9jb2RlIiwiZGF0YSI6ImFmMjIyMTQyMWMxOWU1NWE3MzJiYmI3ZDY2NmUxMDBhIiwiZXhwaXJlIjoxNjU4ODE5NjI2fSwiMTNmNzFkMGI1YzMxYmZlNzYyNDNmNWFmN2IyNTlkZjIiXQ=="
 	VerifySessionKey(key1)
 	VerifySessionKey(key2)
+	VerifySessionKey(key3)
 }
 func VerifySessionKey(sessionKey string) {
 
