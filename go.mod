@@ -19,6 +19,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/stuarthu/securehttp v0.0.0-20181012073024-c5fb2041ec02
+	github.com/syyongx/php2go v0.9.6 // indirect
 	github.com/techoner/gophp v0.2.0
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781 // indirect
