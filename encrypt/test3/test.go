@@ -2,7 +2,6 @@ package main
 
 import (
 	"crypto/md5"
-	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"golang.org/x/crypto/bcrypt"
@@ -34,9 +33,9 @@ func CryptPassword(md5Pass, dbPass string) string {
 		return output
 	}
 
-	hash := Str2Md5(salt + md5Pass)[8:24]
+	hash := Str2Md5Raw(salt + md5Pass)
 	for i := 0; i < count; i++ {
-		hash = Str2Md5(hash + md5Pass)[8:24]
+		hash = Str2Md5Raw(hash + md5Pass)
 	}
 	output = dbPass[:12]
 	// :$P$Bi9sq6/ml
@@ -141,9 +140,9 @@ func Hash2bin(hash string) (string, int, error) {
 	return binary_string, len(binary_string), nil
 }
 
-func Str2Md5Raw(str string) string {
-	h := md5.New()
-	return base64.StdEncoding.EncodeToString(h.Sum(nil))
+func Str2Md5Raw(str string) [16]byte {
+	data := []byte(str)
+	return md5.Sum(data)
 	//h.Write([]byte("hello"))
 
 	//fmt.Println(base64.StdEncoding.EncodeToString(h.Sum(nil)))
