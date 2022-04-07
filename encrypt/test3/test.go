@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// https://www.csdn.net/tags/MtTaMg1sMTE0NTM3LWJsb2cO0O0O.html
 const itoa64 = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 
 func CryptPassword(md5Pass, dbPass string) string {
@@ -33,7 +34,9 @@ func CryptPassword(md5Pass, dbPass string) string {
 		return output
 	}
 
+	fmt.Printf("salt + md5Pass:%s\n", salt+md5Pass)
 	hash := Str2Md5Raw(salt + md5Pass)
+	fmt.Printf("count:%d\n", count)
 	for i := 0; i < count; i++ {
 		hash = Str2Md5Raw(hash + md5Pass)
 	}
@@ -118,6 +121,16 @@ func Str2Md5(str string) string {
 	return hex.EncodeToString(ctx.Sum(nil))
 }
 
+func Str2Md5Raw(str string) string {
+	data := []byte(str)
+	has := md5.Sum(data)
+	//fmt.Printf("%v\n", has)
+	md5str := fmt.Sprintf("%x", has)
+
+	//fmt.Println(base64.StdEncoding.EncodeToString(h.Sum(nil)))
+	return md5str
+}
+
 func Hash2bin(hash string) (string, int, error) {
 	binary_string := ""
 	for _, char := range hash {
@@ -138,16 +151,6 @@ func Hash2bin(hash string) (string, int, error) {
 		binary_string += char_bin
 	}
 	return binary_string, len(binary_string), nil
-}
-
-func Str2Md5Raw(str string) [16]byte {
-	data := []byte(str)
-	return md5.Sum(data)
-	//h.Write([]byte("hello"))
-
-	//fmt.Println(base64.StdEncoding.EncodeToString(h.Sum(nil)))
-
-	//fmt.Println("Hello, playground")
 }
 
 func main() {
