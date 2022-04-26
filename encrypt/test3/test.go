@@ -4,6 +4,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"github.com/imroc/biu"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
 	"strings"
@@ -11,6 +12,47 @@ import (
 
 // https://www.csdn.net/tags/MtTaMg1sMTE0NTM3LWJsb2cO0O0O.html
 const itoa64 = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+func main() {
+	reqPass := "Lu123456"
+	dbPass := "$P$Bi9sq6/ml2tapV278beH1Gt6kMbOKo0"
+	//P$Bi9sq6/ml2tapV278beH1Gt6kMbOKo0
+	fmt.Printf("Str2Md5(reqPass):%s\n", Str2Md5(reqPass))
+	if Str2Md5(reqPass) != dbPass && !CheckPassword(Str2Md5(reqPass), dbPass) {
+		fmt.Println(false)
+	} else {
+		fmt.Println(true)
+	}
+}
+func Str2Md5(str string) string {
+	ctx := md5.New()
+	ctx.Write([]byte(str))
+	return hex.EncodeToString(ctx.Sum(nil))
+}
+
+func Str2Md5Raw2(str string) string {
+	data := []byte(str)
+	has := md5.Sum(data)
+	//fmt.Printf("%v\n", has)
+	//md5str := fmt.Sprintf("%B", has)
+	arr := []byte{}
+	arr = has[:]
+
+	md5str := biu.ToBinaryString(arr)
+	//md5str = strings.Trim(md5str,"[]")
+	//fmt.Printf("md5url:%s\n",md5str)
+	return md5str
+}
+
+func Str2Md5Raw(str string) string {
+	data := []byte(str)
+	has := md5.Sum(data)
+
+	arr := has[:]
+	//fmt.Printf("%v\n", arr)
+
+	return string(arr)
+}
 
 func CryptPassword(md5Pass, dbPass string) string {
 	output := "*0"
@@ -34,7 +76,7 @@ func CryptPassword(md5Pass, dbPass string) string {
 		return output
 	}
 
-	fmt.Printf("salt + md5Pass:%s\n", salt+md5Pass)
+	fmt.Printf("salt + md5Pass:%s\n", salt+md5Pass) //i9sq6/ml10d50a1e43a718a9c31bc450a0985131
 	hash := Str2Md5Raw(salt + md5Pass)
 	fmt.Printf("count:%d\n", count)
 	for i := 0; i < count; i++ {
@@ -42,21 +84,29 @@ func CryptPassword(md5Pass, dbPass string) string {
 	}
 	output = dbPass[:12]
 	// :$P$Bi9sq6/ml
-	fmt.Printf("111:%s\n", output)
-	fmt.Printf("hash:%s\n", hash) //67f08934c146dac19579296829d4c1c8
+	//fmt.Printf("111:%s\n", output)
+	fmt.Printf("hash:%s,len:%d\n", hash, len(hash)) //67f08934c146dac19579296829d4c1c8
 	//当前 qQnBrMaNa/1AkU1CsYHCtAnAnE1BoAqMX3HAlE1BoMXBqE4NY3KMVBqMX3HAl.， 期望 2tapV278beH1Gt6kMbOKo0
-	fmt.Printf("222:%s\n", encode64(hash, 16))
-	output = output + encode64(hash, 16)
+	encodeStr := encode64(hash, 16)
+	fmt.Printf("encodeStr:%s\n", encodeStr) //2taPiNhpK5G6V2NYFW08cQudbeXCuoE1B6ZIGtcXC0Ak.XBqMbOedaJKNF9ho0
+	output = output + encodeStr
 	return output
 }
 
 func encode64(input string, count int) string {
+	for i := 0; i < 16; i++ {
+		fmt.Printf("value:%v\n", input[i])
+	}
 	output := ""
 	i := 0
 	for {
+		fmt.Printf("i:%v,input[i]:%v\n", i, int(input[i]))
 		r := input[i]
 		i = i + 1
 		value := int(r)
+
+		//fmt.Printf("value:%d\n", value)
+
 		output = output + string(rune(itoa64[value&0x3f]))
 
 		if i < count {
@@ -64,16 +114,18 @@ func encode64(input string, count int) string {
 		}
 
 		output = output + string(rune(itoa64[(value>>6)&0x3f]))
-		if i >= count {
-			i = i + 1
+		i = i + 1
+		if i-1 >= count {
+			//i = i + 1
 			break
 		}
 		if i < count {
 			value |= int(input[i]) << 16
 		}
 		output = output + string(rune(itoa64[(value>>12)&0x3f]))
-		if i >= count {
-			i = i + 1
+		i = i + 1
+		if i-1 >= count {
+			//i = i + 1
 			break
 		}
 
@@ -115,22 +167,6 @@ func CheckPassword(md5Pass, dbPass string) bool {
 	return hash == dbPass
 }
 
-func Str2Md5(str string) string {
-	ctx := md5.New()
-	ctx.Write([]byte(str))
-	return hex.EncodeToString(ctx.Sum(nil))
-}
-
-func Str2Md5Raw(str string) string {
-	data := []byte(str)
-	has := md5.Sum(data)
-	//fmt.Printf("%v\n", has)
-	md5str := fmt.Sprintf("%x", has)
-
-	//fmt.Println(base64.StdEncoding.EncodeToString(h.Sum(nil)))
-	return md5str
-}
-
 func Hash2bin(hash string) (string, int, error) {
 	binary_string := ""
 	for _, char := range hash {
@@ -151,16 +187,4 @@ func Hash2bin(hash string) (string, int, error) {
 		binary_string += char_bin
 	}
 	return binary_string, len(binary_string), nil
-}
-
-func main() {
-	reqPass := "Lu123456"
-	dbPass := "$P$Bi9sq6/ml2tapV278beH1Gt6kMbOKo0"
-	//P$Bi9sq6/ml2tapV278beH1Gt6kMbOKo0
-	fmt.Printf("Str2Md5(reqPass):%s\n", Str2Md5(reqPass))
-	if Str2Md5(reqPass) != dbPass && !CheckPassword(Str2Md5(reqPass), dbPass) {
-		fmt.Println(false)
-	} else {
-		fmt.Println(true)
-	}
 }
