@@ -9,7 +9,14 @@ import (
 //而等号复制为指针复制，改变原切片或新切片都会对另一个产生影响。copy复制会比等号复制慢(很好理解)。
 
 func main() {
-	test4()
+	test6()
+}
+
+func test6() {
+	s1 := make([]int, 0)
+	s2 := make([]int, 0)
+	fmt.Printf("%p\n", &s1)
+	fmt.Printf("%p\n", &s2)
 }
 
 func test5() {
@@ -45,7 +52,7 @@ func test4() {
 	fmt.Printf("=======\n")
 
 	sl2 := []string{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"}
-	for i := 0; i < 2048; i++ {
+	for i := 0; i < 20480; i++ {
 		sl2 = append(sl2, strconv.Itoa(i))
 	}
 	fmt.Printf("%p\n", &sl2)

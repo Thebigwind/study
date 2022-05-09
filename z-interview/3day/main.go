@@ -4,6 +4,8 @@ import "fmt"
 
 // 1.
 func main() {
+	a := new(int)
+	fmt.Println(a)
 	s1 := make([]int, 5)
 	s1 = append(s1, 1, 2, 3)
 	fmt.Println(s1)

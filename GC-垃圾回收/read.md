@@ -29,3 +29,8 @@ Go   1.8	混合写屏障（hybrid write barrier）, 消除 re-scanning stack	sub
 Go   1.12	Mark Termination 流程优化	   sub ms, 但几乎减少一半
 
 
+https://www.cnblogs.com/yinbiao/p/15736301.html
+
+
+
+

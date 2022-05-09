@@ -13,5 +13,5 @@ func main() {
 	panic("end.")
 }
 
-//$ go run main.go
+//$ go run check.go
 //2019/05/20 22:22:57 EDDYCJY.

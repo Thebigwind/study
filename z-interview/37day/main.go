@@ -12,7 +12,8 @@ func main() {
 
 	go func() {
 		for _, v := range input {
-			ch <- &v
+			a := v
+			ch <- &a
 		}
 		close(ch)
 	}()

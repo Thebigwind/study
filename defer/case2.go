@@ -15,7 +15,7 @@ func main() {
 }
 
 /*
-$ go run main.go
+$ go run check.go
 2019/05/19 21:19:17 end.
 2019/05/19 21:19:17 EDDYCJY5.
 2019/05/19 21:19:17 EDDYCJY4.

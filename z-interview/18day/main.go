@@ -2,6 +2,7 @@ package main
 
 import "fmt"
 
+//1
 func f1() (r int) {
 	defer func() {
 		r++
@@ -9,6 +10,7 @@ func f1() (r int) {
 	return 0
 }
 
+//5
 func f2() (r int) {
 	t := 5
 	defer func() {
@@ -17,6 +19,7 @@ func f2() (r int) {
 	return t
 }
 
+// 1
 func f3() (r int) {
 	defer func(r int) {
 		r = r + 5
@@ -24,6 +27,7 @@ func f3() (r int) {
 	return 1
 }
 
+//0
 func f4() int {
 	r := 0
 	defer func() {

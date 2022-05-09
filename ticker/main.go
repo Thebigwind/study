@@ -1,9 +1,13 @@
-package ticker
+package main
 
 import (
 	"log"
 	"time"
 )
+
+func main() {
+	TickerDemo()
+}
 
 //1. 简单定时任务
 // 每隔1s记录一次日志：

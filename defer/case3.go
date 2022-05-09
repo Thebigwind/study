@@ -12,7 +12,7 @@ func main() {
 }
 
 /*
-$ go run main.go
+$ go run check.go
 2019/05/22 23:30:27 defer.EDDYCJY.
 2019/05/22 23:30:27 main.EDDYCJY.
 */
