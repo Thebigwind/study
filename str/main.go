@@ -26,7 +26,7 @@ func Test2() bool {
 */
 
 func main() {
-	Test3()
+	test4()
 }
 func Test3() {
 
@@ -63,4 +63,14 @@ func test3() {
 	reslut := fmt.Sprintf("%s%s%s", "aa", "bb", "cc")
 	fmt.Println(reslut)
 
+}
+
+func test4() {
+	if strings.Compare("08:01:02", "08:00:00") > 0 {
+		fmt.Printf("xx")
+	} else {
+		fmt.Printf("oo")
+	}
+	fmt.Printf("\n")
+	fmt.Printf("2006-01-02 12:12:23"[10:])
 }
